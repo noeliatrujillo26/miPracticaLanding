@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Admin</title>
+  <!-- Cliente oficial de Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <h2>Acceso Administrador</h2>
+  <input type="email" id="email" placeholder="Correo">
+  <input type="password" id="password" placeholder="Contraseña">
+  <button onclick="iniciarSesion()">Entrar</button>
+
+  <script>
+    // Coloca tus credenciales reales aquí
+    const SUPABASE_URL = 'https://gyldwyadpgxtmtclfdbx.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5bGR3eWFkcGd4dG10Y2xmZGJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyNDM5NTksImV4cCI6MjEwMjgxOTk1OX0.K9bLLXQsHvJhpubWJgnXPVs_KZW6paGqco81eTObbnY';
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function iniciarSesion() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      const { data, error } = await client.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        alert('Error al ingresar: ' + error.message);
+      } else {
+        alert('¡Inicio de sesión correcto!');
+        window.location.href = 'admin.html';
+      }
+    }
+  </script>
+</body>
+</html>
