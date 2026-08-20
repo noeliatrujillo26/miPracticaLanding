@@ -6,69 +6,238 @@
   <title>Noelia's Helados</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍦</text></svg>">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-<body class="bg-pink-50 text-gray-800 font-sans">
+<body class="bg-pink-50 text-gray-800 font-sans pb-24">
 
   <!-- Navegación -->
-  <nav class="bg-white shadow-md py-4 px-8 flex justify-between items-center sticky top-0 z-50">
+  <nav class="bg-white shadow-md py-4 px-8 flex justify-between items-center sticky top-0 z-40">
     <div class="flex items-center space-x-2">
       <span class="text-3xl">🍦</span>
       <h1 class="text-2xl font-bold text-pink-600">Noelia's Gelato</h1>
     </div>
-    <div>
-      <a href="login.html" class="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-5 py-2 rounded-full transition duration-300 shadow">
-        🔐 Acceso Admin
+    <div class="flex items-center space-x-4">
+      <button onclick="abrirCarrito()" class="relative bg-pink-100 hover:bg-pink-200 text-pink-700 font-bold px-4 py-2 rounded-full transition">
+        🛒 Carrito
+        <span id="cart-count" class="absolute -top-2 -right-2 bg-pink-600 text-white text-xs px-2 py-0.5 rounded-full">0</span>
+      </button>
+      <a href="login.html" class="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-4 py-2 rounded-full transition shadow text-sm">
+        🔐 Admin
       </a>
     </div>
   </nav>
 
   <!-- Hero Banner -->
-  <section class="text-center py-16 px-4 bg-gradient-to-r from-pink-400 via-rose-300 to-amber-200 text-white shadow-inner">
-    <h2 class="text-4xl md:text-5xl font-extrabold mb-4">¡Los helados más deliciosos de la ciudad!</h2>
-    <p class="text-lg md:text-xl max-w-2xl mx-auto opacity-90">Ingredientes 100% naturales, elaborados artesanalmente todos los días con las mejores recetas tradicionales.</p>
+  <section class="text-center py-12 px-4 bg-gradient-to-r from-pink-400 via-rose-300 to-amber-200 text-white shadow-inner">
+    <h2 class="text-4xl font-extrabold mb-3">¡Elige tu helado favorito!</h2>
+    <p class="text-md max-w-xl mx-auto opacity-90">Selecciona tus sabores, agrégalos al carrito y haz tu pedido en segundos.</p>
   </section>
 
   <!-- Catálogo de Sabores -->
-  <main class="max-w-6xl mx-auto py-12 px-6">
-    <h3 class="text-3xl font-bold text-center text-gray-700 mb-10">Sabores Destacados</h3>
-    
+  <main class="max-w-6xl mx-auto py-10 px-6">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <!-- Tarjeta 1 -->
-      <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
-        <div class="h-48 bg-amber-100 flex items-center justify-center text-6xl">🍨</div>
-        <div class="p-6">
-          <h4 class="text-xl font-bold text-pink-600 mb-2">Vainilla & Caramelo</h4>
-          <p class="text-gray-600 text-sm mb-4">Vainilla pura de Papantla con hilos de caramelo salado suave.</p>
-          <span class="text-lg font-extrabold text-gray-800">$45 MXN</span>
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col justify-between">
+        <div>
+          <div class="h-44 bg-amber-100 flex items-center justify-center text-6xl">🍨</div>
+          <div class="p-5">
+            <h4 class="text-xl font-bold text-pink-600 mb-1">Vainilla & Caramelo</h4>
+            <p class="text-gray-600 text-xs mb-3">Vainilla pura con caramelos artesanales.</p>
+            <span class="text-lg font-extrabold text-gray-800">$45 MXN</span>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <button onclick="agregarAlCarrito('Vainilla & Caramelo', 45)" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 rounded-xl transition">
+            + Agregar al Carrito
+          </button>
         </div>
       </div>
 
       <!-- Tarjeta 2 -->
-      <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
-        <div class="h-48 bg-rose-100 flex items-center justify-center text-6xl">🍓</div>
-        <div class="p-6">
-          <h4 class="text-xl font-bold text-pink-600 mb-2">Fresa con Crema</h4>
-          <p class="text-gray-600 text-sm mb-4">Fresas frescas del campo mezcladas con crema artesanal batida.</p>
-          <span class="text-lg font-extrabold text-gray-800">$48 MXN</span>
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col justify-between">
+        <div>
+          <div class="h-44 bg-rose-100 flex items-center justify-center text-6xl">🍓</div>
+          <div class="p-5">
+            <h4 class="text-xl font-bold text-pink-600 mb-1">Fresa con Crema</h4>
+            <p class="text-gray-600 text-xs mb-3">Fresas frescas con crema batida.</p>
+            <span class="text-lg font-extrabold text-gray-800">$48 MXN</span>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <button onclick="agregarAlCarrito('Fresa con Crema', 48)" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 rounded-xl transition">
+            + Agregar al Carrito
+          </button>
         </div>
       </div>
 
       <!-- Tarjeta 3 -->
-      <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
-        <div class="h-48 bg-amber-200 flex items-center justify-center text-6xl">🍫</div>
-        <div class="p-6">
-          <h4 class="text-xl font-bold text-pink-600 mb-2">Chocolate Oscuro 70%</h4>
-          <p class="text-gray-600 text-sm mb-4">Para amantes del cacao intenso con chispas de chocolate amargo.</p>
-          <span class="text-lg font-extrabold text-gray-800">$50 MXN</span>
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col justify-between">
+        <div>
+          <div class="h-44 bg-amber-200 flex items-center justify-center text-6xl">🍫</div>
+          <div class="p-5">
+            <h4 class="text-xl font-bold text-pink-600 mb-1">Chocolate Oscuro</h4>
+            <p class="text-gray-600 text-xs mb-3">Cacao intenso al 70%.</p>
+            <span class="text-lg font-extrabold text-gray-800">$50 MXN</span>
+          </div>
+        </div>
+        <div class="p-5 pt-0">
+          <button onclick="agregarAlCarrito('Chocolate Oscuro', 50)" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 rounded-xl transition">
+            + Agregar al Carrito
+          </button>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Pie de Página -->
-  <footer class="bg-white border-t border-pink-100 text-center py-6 text-sm text-gray-500">
-    <p>© 2026 Heladería Noelia's — Todos los derechos reservados.</p>
-  </footer>
+  <!-- Modal del Carrito -->
+  <div id="cart-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl">
+      <div class="flex justify-between items-center mb-4 border-b pb-3">
+        <h3 class="text-xl font-bold text-gray-800">🛒 Tu Carrito</h3>
+        <button onclick="cerrarCarrito()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">×</button>
+      </div>
+
+      <div id="cart-items" class="max-h-48 overflow-y-auto mb-4">
+        <!-- Ítems dinámicos -->
+      </div>
+
+      <div class="border-t pt-3 mb-4 flex justify-between items-center font-bold text-lg">
+        <span>Total:</span>
+        <span id="cart-total" class="text-pink-600">$0 MXN</span>
+      </div>
+
+      <div class="space-y-3">
+        <input type="text" id="cliente-nombre" placeholder="Tu Nombre completo" class="w-full px-4 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-pink-400 outline-none">
+        <input type="tel" id="cliente-telefono" placeholder="Número de Teléfono" class="w-full px-4 py-2 border rounded-xl text-sm focus:ring-2 focus:ring-pink-400 outline-none">
+        
+        <p id="pedido-msg" class="text-xs text-green-600 font-bold hidden text-center bg-green-50 p-2 rounded-lg">
+          🎉 ¡Pedido enviado con éxito! Se reflejará en el Admin.
+        </p>
+
+        <button onclick="enviarPedido()" id="btn-confirmar" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition shadow-lg">
+          Confirmar y Enviar Pedido
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SUPABASE_URL = 'https://gyldwyadpgxtmtclfdbx.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5bGR3eWFkcGd4dG10Y2xmZGJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyNDM5NTksImV4cCI6MjEwMjgxOTk1OX0.K9bLLXQsHvJhpubWJgnXPVs_KZW6paGqco81eTObbnY'; // Pegar tu clave anon aquí
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let carrito = [];
+
+    function agregarAlCarrito(nombre, precio) {
+      const existe = carrito.find(i => i.nombre === nombre);
+      if (existe) {
+        existe.cantidad++;
+      } else {
+        carrito.push({ nombre, precio, cantidad: 1 });
+      }
+      actualizarUI();
+      abrirCarrito();
+    }
+
+    function actualizarUI() {
+      const count = document.getElementById('cart-count');
+      const itemsContainer = document.getElementById('cart-items');
+      const totalContainer = document.getElementById('cart-total');
+
+      const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+      count.innerText = totalItems;
+
+      itemsContainer.innerHTML = '';
+      let total = 0;
+
+      if (carrito.length === 0) {
+        itemsContainer.innerHTML = '<p class="text-center text-xs text-gray-400 py-4">El carrito está vacío</p>';
+      } else {
+        carrito.forEach((item, index) => {
+          const subtotal = item.precio * item.cantidad;
+          total += subtotal;
+          itemsContainer.innerHTML += `
+            <div class="flex justify-between items-center bg-pink-50 p-3 rounded-xl mb-2">
+              <div>
+                <p class="font-bold text-sm text-gray-800">${item.nombre}</p>
+                <p class="text-xs text-gray-500">$${item.precio} x ${item.cantidad}</p>
+              </div>
+              <div class="flex items-center space-x-2">
+                <span class="font-bold text-pink-600 text-sm">$${subtotal}</span>
+                <button onclick="eliminarDelCarrito(${index})" class="text-red-500 text-xs font-bold px-1">✕</button>
+              </div>
+            </div>
+          `;
+        });
+      }
+
+      totalContainer.innerText = `$${total} MXN`;
+    }
+
+    function eliminarDelCarrito(index) {
+      carrito.splice(index, 1);
+      actualizarUI();
+    }
+
+    function abrirCarrito() {
+      document.getElementById('cart-modal').classList.remove('hidden');
+    }
+
+    function cerrarCarrito() {
+      document.getElementById('cart-modal').classList.add('hidden');
+    }
+
+    async function enviarPedido() {
+      const nombre = document.getElementById('cliente-nombre').value;
+      const telefono = document.getElementById('cliente-telefono').value;
+      const btn = document.getElementById('btn-confirmar');
+      const msg = document.getElementById('pedido-msg');
+
+      if (!nombre || !telefono) {
+        alert('Por favor completa tu nombre y teléfono.');
+        return;
+      }
+
+      if (carrito.length === 0) {
+        alert('Tu carrito está vacío.');
+        return;
+      }
+
+      const resumen = carrito.map(i => `${i.cantidad}x ${i.nombre}`).join(', ');
+      const total = carrito.reduce((sum, i) => sum + (i.precio * i.cantidad), 0);
+
+      btn.disabled = true;
+      btn.innerText = '⏳ Guardando pedido...';
+
+      const { data, error } = await client.from('pedidos').insert([
+        {
+          cliente_nombre: nombre,
+          cliente_telefono: telefono,
+          productos: resumen,
+          total: total,
+          estado: 'Pendiente'
+        }
+      ]);
+
+      if (error) {
+        alert('Error: ' + error.message);
+        btn.disabled = false;
+        btn.innerText = 'Confirmar y Enviar Pedido';
+      } else {
+        msg.classList.remove('hidden');
+        carrito = [];
+        actualizarUI();
+        setTimeout(() => {
+          msg.classList.add('hidden');
+          cerrarCarrito();
+          btn.disabled = false;
+          btn.innerText = 'Confirmar y Enviar Pedido';
+          document.getElementById('cliente-nombre').value = '';
+          document.getElementById('cliente-telefono').value = '';
+        }, 2000);
+      }
+    }
+  </script>
 
 </body>
 </html>
