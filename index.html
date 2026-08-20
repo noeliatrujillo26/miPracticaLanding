@@ -121,13 +121,14 @@
     </div>
   </div>
 
-  <script>
+<script>
     const SUPABASE_URL = 'https://gyldwyadpgxtmtclfdbx.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5bGR3eWFkcGd4dG10Y2xmZGJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyNDM5NTksImV4cCI6MjEwMjgxOTk1OX0.K9bLLXQsHvJhpubWJgnXPVs_KZW6paGqco81eTObbnY'; // Pegar tu clave anon aquí
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5bGR3eWFkcGd4dG10Y2xmZGJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyNDM5NTksImV4cCI6MjEwMjgxOTk1OX0.K9bLLXQsHvJhpubWJgnXPVs_KZW6paGqco81eTObbnY'; // Recuerda mantener tu clave anon aquí
     const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     let carrito = [];
 
+    // Función modificada: Ya no abre el modal automáticamente
     function agregarAlCarrito(nombre, precio) {
       const existe = carrito.find(i => i.nombre === nombre);
       if (existe) {
@@ -135,8 +136,7 @@
       } else {
         carrito.push({ nombre, precio, cantidad: 1 });
       }
-      actualizarUI();
-      abrirCarrito();
+      actualizarUI(); // Actualiza el número en la barra de navegación
     }
 
     function actualizarUI() {
