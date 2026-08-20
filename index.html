@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heladería Noelia's | Helados Artesanales</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-pink-50 text-gray-800 font-sans">
+
+  <!-- Navegación -->
+  <nav class="bg-white shadow-md py-4 px-8 flex justify-between items-center sticky top-0 z-50">
+    <div class="flex items-center space-x-2">
+      <span class="text-3xl">🍦</span>
+      <h1 class="text-2xl font-bold text-pink-600">Noelia's Gelato</h1>
+    </div>
+    <div>
+      <a href="login.html" class="bg-pink-500 hover:bg-pink-600 text-white font-semibold px-5 py-2 rounded-full transition duration-300 shadow">
+        🔐 Acceso Admin
+      </a>
+    </div>
+  </nav>
+
+  <!-- Hero Banner -->
+  <section class="text-center py-16 px-4 bg-gradient-to-r from-pink-400 via-rose-300 to-amber-200 text-white shadow-inner">
+    <h2 class="text-4xl md:text-5xl font-extrabold mb-4">¡Los helados más deliciosos de la ciudad!</h2>
+    <p class="text-lg md:text-xl max-w-2xl mx-auto opacity-90">Ingredientes 100% naturales, elaborados artesanalmente todos los días con las mejores recetas tradicionales.</p>
+  </section>
+
+  <!-- Catálogo de Sabores -->
+  <main class="max-w-6xl mx-auto py-12 px-6">
+    <h3 class="text-3xl font-bold text-center text-gray-700 mb-10">Sabores Destacados</h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Tarjeta 1 -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
+        <div class="h-48 bg-amber-100 flex items-center justify-center text-6xl">🍨</div>
+        <div class="p-6">
+          <h4 class="text-xl font-bold text-pink-600 mb-2">Vainilla & Caramelo</h4>
+          <p class="text-gray-600 text-sm mb-4">Vainilla pura de Papantla con hilos de caramelo salado suave.</p>
+          <span class="text-lg font-extrabold text-gray-800">$45 MXN</span>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2 -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
+        <div class="h-48 bg-rose-100 flex items-center justify-center text-6xl">🍓</div>
+        <div class="p-6">
+          <h4 class="text-xl font-bold text-pink-600 mb-2">Fresa con Crema</h4>
+          <p class="text-gray-600 text-sm mb-4">Fresas frescas del campo mezcladas con crema artesanal batida.</p>
+          <span class="text-lg font-extrabold text-gray-800">$48 MXN</span>
+        </div>
+      </div>
+
+      <!-- Tarjeta 3 -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition duration-300">
+        <div class="h-48 bg-amber-200 flex items-center justify-center text-6xl">🍫</div>
+        <div class="p-6">
+          <h4 class="text-xl font-bold text-pink-600 mb-2">Chocolate Oscuro 70%</h4>
+          <p class="text-gray-600 text-sm mb-4">Para amantes del cacao intenso con chispas de chocolate amargo.</p>
+          <span class="text-lg font-extrabold text-gray-800">$50 MXN</span>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Pie de Página -->
+  <footer class="bg-white border-t border-pink-100 text-center py-6 text-sm text-gray-500">
+    <p>© 2026 Heladería Noelia's — Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>
