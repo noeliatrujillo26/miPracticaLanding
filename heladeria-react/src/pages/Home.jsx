@@ -3,35 +3,28 @@ import { Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
 export function Home() {
-  // Estado para el carrito de compras
   const [carrito, setCarrito] = useState([]);
   const [mostrandoCarrito, setMostrandoCarrito] = useState(false);
   const [procesando, setProcesando] = useState(false);
 
-  // Lista de helados
   const helados = [
-    { id: 1, nombre: "Vainilla & Caramelo", precio: 45, emoji: "🍨", bg: "bg-amber-100" },
-    { id: 2, nombre: "Fresa con Crema", precio: 48, emoji: "🍓", bg: "bg-rose-100" },
-    { id: 3, nombre: "Chocolate Oscuro 70%", precio: 50, emoji: "🍫", bg: "bg-amber-200" }
+    { id: 1, nombre: "Vainilla & Caramelo", precio: 45, emoji: "🍨", bg: "bg-amber-100", desc: "Vainilla pura de Papantla con hilos de caramelo salado suave." },
+    { id: 2, nombre: "Fresa con Crema", precio: 48, emoji: "🍓", bg: "bg-rose-100", desc: "Fresas frescas del campo mezcladas con crema artesanal batida." },
+    { id: 3, nombre: "Chocolate Oscuro 70%", precio: 50, emoji: "🍫", bg: "bg-amber-200", desc: "Para amantes del cacao intenso con chispas de chocolate amargo." }
   ];
 
-  // Agregar producto al carrito
   const agregarAlCarrito = (helado) => {
     setCarrito([...carrito, helado]);
   };
 
-  // Vaciar carrito
   const vaciarCarrito = () => setCarrito([]);
 
-  // Calcular total
   const total = carrito.reduce((acc, item) => acc + item.precio, 0);
 
-  // Registrar la compra en Supabase
   const realizarCompra = async () => {
     if (carrito.length === 0) return;
     setProcesando(true);
 
-    // Guarda el registro en la tabla 'pedidos' de Supabase
     const { error } = await supabase
       .from('pedidos')
       .insert([
@@ -45,7 +38,7 @@ export function Home() {
     setProcesando(false);
 
     if (error) {
-      alert("Hubo un error al registrar la compra: " + error.message);
+      alert("Error al registrar la compra: " + error.message);
     } else {
       alert("¡Compra realizada con éxito! Gracias por tu pedido 🍦");
       vaciarCarrito();
@@ -61,8 +54,9 @@ export function Home() {
           <span className="text-3xl">🍦</span>
           <h1 className="text-2xl font-bold text-pink-600">Noelia's Gelato</h1>
         </div>
+        
         <div className="flex items-center space-x-4">
-          {/* Botón Carrito */}
+          {/* Botón del Carrito */}
           <button 
             onClick={() => setMostrandoCarrito(!mostrandoCarrito)}
             className="relative bg-amber-400 hover:bg-amber-500 text-gray-900 font-bold px-4 py-2 rounded-full transition shadow flex items-center gap-2"
@@ -119,7 +113,7 @@ export function Home() {
                   disabled={procesando}
                   className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition shadow disabled:opacity-50 mb-2"
                 >
-                  {procesando ? 'Guardando en Supabase...' : 'Confirmar y Pagar'}
+                  {procesando ? 'Guardando...' : 'Confirmar y Pagar'}
                 </button>
                 <button 
                   onClick={vaciarCarrito}
@@ -139,7 +133,7 @@ export function Home() {
         <p className="text-lg md:text-xl max-w-2xl mx-auto opacity-90">Ingredientes 100% naturales, elaborados artesanalmente todos los días.</p>
       </section>
 
-      {/* Catálogo */}
+      {/* Catálogo de Helados */}
       <main className="max-w-6xl mx-auto py-12 px-6">
         <h3 className="text-3xl font-bold text-center text-gray-700 mb-10">Sabores Destacados</h3>
 
@@ -150,7 +144,7 @@ export function Home() {
                 <div className={`h-48 ${helado.bg} flex items-center justify-center text-6xl`}>{helado.emoji}</div>
                 <div className="p-6">
                   <h4 className="text-xl font-bold text-pink-600 mb-2">{helado.nombre}</h4>
-                  <p className="text-gray-600 text-sm mb-4">Elaborado artesanalmente con los mejores ingredientes.</p>
+                  <p className="text-gray-600 text-sm mb-4">{helado.desc}</p>
                   <span className="text-lg font-extrabold text-gray-800">${helado.precio} MXN</span>
                 </div>
               </div>
@@ -166,6 +160,11 @@ export function Home() {
           ))}
         </div>
       </main>
+
+      {/* Footer */}
+      <footer className="bg-pink-600 text-white text-center py-6 mt-12">
+        <p className="text-sm">© 2026 Noelia's Gelato. Todos los derechos reservados.</p>
+      </footer>
     </div>
   );
 }
