@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admin | Noelia's Gelato</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen">
+
+  <!-- Header Admin -->
+  <header class="bg-gray-900 text-white py-4 px-8 flex justify-between items-center shadow-lg">
+    <div class="flex items-center space-x-3">
+      <span class="text-2xl">📊</span>
+      <h1 class="text-xl font-bold">Administrador — Heladería Noelia's</h1>
+    </div>
+    <button onclick="cerrarSesion()" class="bg-red-500 hover:bg-red-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition duration-200">
+      Cerrar Sesión
+    </button>
+  </header>
+
+  <!-- Contenido Principal -->
+  <main class="max-w-7xl mx-auto py-10 px-6">
+    <div class="flex justify-between items-center mb-8">
+      <h2 class="text-2xl font-bold text-gray-700">Resumen de Operaciones</h2>
+      <span class="bg-green-100 text-green-700 font-medium text-xs px-3 py-1 rounded-full">● Conectado a Supabase</span>
+    </div>
+
+    <!-- Tarjetas de Estadísticas -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+        <p class="text-xs text-gray-400 font-bold uppercase">Ventas de Hoy</p>
+        <h3 class="text-3xl font-extrabold text-pink-600 mt-2">$3,420 MXN</h3>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+        <p class="text-xs text-gray-400 font-bold uppercase">Pedidos Atendidos</p>
+        <h3 class="text-3xl font-extrabold text-blue-600 mt-2">78</h3>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+        <p class="text-xs text-gray-400 font-bold uppercase">Sabor Más Vendido</p>
+        <h3 class="text-xl font-bold text-amber-600 mt-2">Fresa con Crema</h3>
+      </div>
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200">
+        <p class="text-xs text-gray-400 font-bold uppercase">Stock de Botes</p>
+        <h3 class="text-3xl font-extrabold text-green-600 mt-2">42 kg</h3>
+      </div>
+    </div>
+
+    <!-- Tabla de Pedidos Recientes -->
+    <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+      <div class="p-6 border-b border-gray-100">
+        <h3 class="text-lg font-bold text-gray-800">Últimas Transacciones</h3>
+      </div>
+      <table class="w-full text-left text-sm text-gray-600">
+        <thead class="bg-gray-50 text-xs text-gray-400 uppercase">
+          <tr>
+            <th class="py-3 px-6">ID Pedido</th>
+            <th class="py-3 px-6">Cliente</th>
+            <th class="py-3 px-6">Sabor</th>
+            <th class="py-3 px-6">Total</th>
+            <th class="py-3 px-6">Estado</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr>
+            <td class="py-4 px-6 font-mono font-bold text-pink-600">#RES-104</td>
+            <td class="py-4 px-6">Carlos Mendoza</td>
+            <td class="py-4 px-6">Vainilla & Caramelo</td>
+            <td class="py-4 px-6 font-semibold">$90 MXN</td>
+            <td class="py-4 px-6"><span class="bg-green-100 text-green-700 px-2.5 py-1 rounded-full text-xs font-semibold">Completado</span></td>
+          </tr>
+          <tr>
+            <td class="py-4 px-6 font-mono font-bold text-pink-600">#RES-105</td>
+            <td class="py-4 px-6">Ana María Gómez</td>
+            <td class="py-4 px-6">Chocolate Oscuro</td>
+            <td class="py-4 px-6 font-semibold">$50 MXN</td>
+            <td class="py-4 px-6"><span class="bg-amber-100 text-amber-700 px-2.5 py-1 rounded-full text-xs font-semibold">En preparación</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <script>
+    const SUPABASE_URL = 'https://gyldwyadpgxtmtclfdbx.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd5bGR3eWFkcGd4dG10Y2xmZGJ4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyNDM5NTksImV4cCI6MjEwMjgxOTk1OX0.K9bLLXQsHvJhpubWJgnXPVs_KZW6paGqco81eTObbnY'; // Pega tu clave de Supabase aquí
+    const client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function cerrarSesion() {
+      await client.auth.signOut();
+      window.location.href = 'login.html';
+    }
+  </script>
+
+</body>
+</html>
