@@ -7,6 +7,10 @@ export function Home() {
   const [mostrandoCarrito, setMostrandoCarrito] = useState(false);
   const [procesando, setProcesando] = useState(false);
 
+  // Estados para los datos del cliente
+  const [clienteNombre, setClienteNombre] = useState('');
+  const [clienteTelefono, setClienteTelefono] = useState('');
+
   const helados = [
     { id: 1, nombre: "Vainilla & Caramelo", precio: 45, emoji: "🍨", bg: "bg-amber-100", desc: "Vainilla pura de Papantla con hilos de caramelo salado suave." },
     { id: 2, nombre: "Fresa con Crema", precio: 48, emoji: "🍓", bg: "bg-rose-100", desc: "Fresas frescas del campo mezcladas con crema artesanal batida." },
@@ -17,20 +21,33 @@ export function Home() {
     setCarrito([...carrito, helado]);
   };
 
-  const vaciarCarrito = () => setCarrito([]);
+  const vaciarCarrito = () => {
+    setCarrito([]);
+    setClienteNombre('');
+    setClienteTelefono('');
+  };
 
   const total = carrito.reduce((acc, item) => acc + item.precio, 0);
 
   const realizarCompra = async () => {
     if (carrito.length === 0) return;
+
+    if (!clienteNombre.trim()) {
+      alert("Por favor ingresa tu nombre para continuar.");
+      return;
+    }
+
     setProcesando(true);
 
     const { error } = await supabase
       .from('pedidos')
       .insert([
         { 
-          total: total, 
+          cliente_nombre: clienteNombre,
+          cliente_telefono: clienteTelefono,
           detalles: JSON.stringify(carrito),
+          productos: JSON.stringify(carrito),
+          total: total,
           fecha: new Date().toISOString()
         }
       ]);
@@ -81,7 +98,7 @@ export function Home() {
       {/* Ventana Modal del Carrito */}
       {mostrandoCarrito && (
         <div className="fixed inset-0 bg-black/50 z-50 flex justify-end">
-          <div className="bg-white w-full max-w-md h-full p-6 shadow-2xl flex flex-col justify-between">
+          <div className="bg-white w-full max-w-md h-full p-6 shadow-2xl flex flex-col justify-between overflow-y-auto">
             <div>
               <div className="flex justify-between items-center border-b pb-4 mb-4">
                 <h3 className="text-xl font-bold text-gray-800">Tu Carrito 🛒</h3>
@@ -91,14 +108,42 @@ export function Home() {
               {carrito.length === 0 ? (
                 <p className="text-gray-500 text-center py-8">El carrito está vacío</p>
               ) : (
-                <ul className="divide-y divide-gray-100 max-h-96 overflow-y-auto">
-                  {carrito.map((item, index) => (
-                    <li key={index} className="py-3 flex justify-between items-center">
-                      <span>{item.emoji} {item.nombre}</span>
-                      <span className="font-bold text-pink-600">${item.precio} MXN</span>
-                    </li>
-                  ))}
-                </ul>
+                <>
+                  <ul className="divide-y divide-gray-100 max-h-60 overflow-y-auto mb-6">
+                    {carrito.map((item, index) => (
+                      <li key={index} className="py-3 flex justify-between items-center">
+                        <span>{item.emoji} {item.nombre}</span>
+                        <span className="font-bold text-pink-600">${item.precio} MXN</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Formulario Datos del Cliente */}
+                  <div className="bg-pink-50 p-4 rounded-xl border border-pink-100 mb-4 space-y-3">
+                    <h4 className="font-bold text-sm text-pink-700">Datos de la Entrega:</h4>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-600 mb-1">Nombre Completo *</label>
+                      <input 
+                        type="text"
+                        placeholder="Ej. Maria López"
+                        value={clienteNombre}
+                        onChange={(e) => setClienteNombre(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-semibold text-gray-600 mb-1">Teléfono</label>
+                      <input 
+                        type="tel"
+                        placeholder="Ej. 6621234567"
+                        value={clienteTelefono}
+                        onChange={(e) => setClienteTelefono(e.target.value)}
+                        className="w-full px-3 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+                      />
+                    </div>
+                  </div>
+                </>
               )}
             </div>
 
